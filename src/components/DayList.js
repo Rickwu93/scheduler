@@ -13,6 +13,6 @@ export default function DayList(props) {
 			/>
 		);
 	});
-
+// console.log(props.setDay, 'findMe')
 	return <ul>{dayList}</ul>;
 }
