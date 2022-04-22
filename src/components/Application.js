@@ -5,9 +5,6 @@ import Appointment from "components/Appointment";
 import axios from 'axios';
 
 
-
-
-
 const appointments = {
   "1": {
     id: 1,
@@ -49,8 +46,17 @@ const appointments = {
 
 export default function Application() {
   
-  const [days, setDays] = useState([]);
-  const [day, setDay] = useState("Monday");
+  // const [days, setDays] = useState([]);
+  // const [day, setDay] = useState("Monday");
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
+  //updates the state with the new day. creates new object with all of the existing key states
+  const setDay = day => setState({ ...state, day });
+  const setDays = days => setState(prev => ({ ...prev, days }));
+  // const setDays = days => setState({ ...state, days });
 
   useEffect(() => {
     axios.get("/api/days")
@@ -71,9 +77,9 @@ export default function Application() {
 <hr className="sidebar__separator sidebar--centered" />
 <nav className="sidebar__menu">
 <DayList
-  days={days}
-  value={day}
-  onChange={setDay}
+  days={state.days}
+  day={state.day}
+  setDay={setDay}
 />
 </nav>
 <img
