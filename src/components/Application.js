@@ -111,12 +111,7 @@ const schedule = dailyAppointments.map((appointment) => {
 />
       </section>
       <section className="schedule">
-      {dailyAppointments.map(appointment => 
-        <Appointment
-          key={appointment.id}
-          {...appointment}
-          />
-      )}
+      {schedule}
       <Appointment key="last" time="5pm" />
       </section>
     </main>

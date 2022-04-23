@@ -16,7 +16,7 @@ export function getAppointmentsForDay(state, day) {
   }
 return output;
 }
-
+//returns interview object for each specific time slot
 export function getInterview(state, interview) {
   if (!interview) return null;
 
