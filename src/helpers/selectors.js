@@ -1,21 +1,38 @@
 export function getAppointmentsForDay(state, day) {
  
-  const dayArray = state.days.find(element => element.name === day);
+  const dayObject = state.days.find(element => element.name === day);
 
-  if (!dayArray) {
+  if (!dayObject) {
     return [];
   }
 
-  const appointmentObject = dayArray.appointments;
+  const appointmentId = dayObject.appointments;
   const output = [];
 
   for (const id in state.appointments) {
-    if (appointmentObject.includes(Number(id))) {
-      output.push(state.appointments[id])
+    if (appointmentId.includes(Number(id))) {
+      output.push(state.appointments[id]);
     }
   }
 return output;
-}
+};
+
+export function getInterviewersForDay(state, day) {
+ 
+  const dayObject = state.days.find(element => element.name === day);
+
+  if (!dayObject) {
+    return [];
+  }
+
+  const interviewerId = dayObject.interviewers;
+  // console.log(interviewerId)
+  const stateInterviewers = interviewerId.map((id) => {
+    return state.interviewers[id]
+  })
+return stateInterviewers
+};
+
 //returns interview object for each specific time slot
 export function getInterview(state, interview) {
   if (!interview) return null;
@@ -27,4 +44,4 @@ export function getInterview(state, interview) {
     interviewer
   }
   return outputObj;
-}
+};

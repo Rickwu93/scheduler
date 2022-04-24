@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
+
+
 export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-
+console.log(props, 'findMe')
   //clears the name and interviewer selection when users cancel out of the form
   const reset = () => {
     setStudent("");
