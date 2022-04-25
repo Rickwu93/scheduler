@@ -7,7 +7,7 @@ import InterviewerList from "components/InterviewerList";
 export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-console.log(props, 'findMe')
+// console.log(props, 'findMe')
   //clears the name and interviewer selection when users cancel out of the form
   const reset = () => {
     setStudent("");
@@ -40,7 +40,7 @@ console.log(props, 'findMe')
   <section className="appointment__card-right">
     <section className="appointment__actions">
       <Button danger onClick={cancel}>Cancel</Button>
-      <Button confirm>Save</Button>
+      <Button confirm onClick={() => props.onSave(student, interviewer)}>Save</Button>
     </section>
   </section>
 </main>

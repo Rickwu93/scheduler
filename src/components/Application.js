@@ -34,19 +34,31 @@ export default function Application() {
 }, []);
 
 function bookInterview(id, interview) {
-  console.log(id, interview);
+  const appointment = {
+    ...state.appointments[id],
+    interview: { ...interview }
+  }
+
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment
+  }
+// setState(state => ({ ...state, appointments})); //only updating our state locally
+// console.log(interview, "interviewww")
+return axios.put(`api/appointments/${id}`, {interview})
+  .then(response => setState(state => ({ ...state, appointments })));
 }
 
 const dailyAppointments = getAppointmentsForDay(state, state.day);
-console.log(dailyAppointments, 'bbbb')
+// console.log(dailyAppointments, 'bbbb')
 const schedule = dailyAppointments.map((appointment) => {
 
   const interviewers = getInterviewersForDay(state, state.day);
   const interview = getInterview(state, appointment.interview);
 
-  console.log(appointment, 'hello')
-  console.log(interviewers, 'interviewers')
-  console.log(interview, 'interview')
+  // console.log(appointment, 'hello')
+  // console.log(interviewers, 'interviewers')
+  // console.log(interview, 'interview')
 
   return (
     <Appointment
