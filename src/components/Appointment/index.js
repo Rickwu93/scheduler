@@ -10,7 +10,8 @@ import Status from "./Status";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
-const SAVE = "SAVE"
+const SAVE = "SAVE";
+const DELETE = "DELETE";
 
 export default function Appointment(props) {
  //if props.interview has a value, pass useVisualMode the SHOW mode, else pass EMPTY 
@@ -28,6 +29,13 @@ export default function Appointment(props) {
     props.bookInterview(props.id, interview)
     .then(() => transition(SHOW));
   }
+
+  function deleteInterview() {
+    transition(DELETE);
+
+    props.cancelInterview(props.id)
+    .then(() => transition(EMPTY));
+  }
   
 
   return (
@@ -38,6 +46,7 @@ export default function Appointment(props) {
     <Show
     student={props.interview.student}
     interviewer={props.interview.interviewer}
+    onDelete={deleteInterview}
   />
 )}
   {mode === CREATE && (
@@ -53,6 +62,13 @@ export default function Appointment(props) {
       message={"Saving"}
     />
   )}
+
+  {mode === DELETE && (
+    <Status
+      message={"Deleting"}
+    />
+  )}
+
    </article>
   )
 };

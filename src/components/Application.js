@@ -8,8 +8,7 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 
 export default function Application() {
   
-  // const [days, setDays] = useState([]);
-  // const [day, setDay] = useState("Monday");
+
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -25,11 +24,12 @@ export default function Application() {
   useEffect(() => {
     Promise.all([
     axios.get("/api/days"),
-    axios.get("api/appointments"),
-    axios.get("api/interviewers")
+    axios.get("/api/appointments"),
+    axios.get("/api/interviewers")
   ]).then(all => {
       console.log(all, 'all')
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
+      
       })
 }, []);
 
@@ -44,9 +44,22 @@ function bookInterview(id, interview) {
     [id]: appointment
   }
 // setState(state => ({ ...state, appointments})); //only updating our state locally
-// console.log(interview, "interviewww")
 return axios.put(`api/appointments/${id}`, {interview})
   .then(response => setState(state => ({ ...state, appointments })));
+}
+//similar to bookInterview
+function cancelInterview(id) {
+  const appointment = {
+    ...state.appointments[id],
+    interview: null
+  }
+
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment
+  }
+  return axios.delete(`api/appointments/${id}`)
+    .then(response => setState(state => ({ ...state, appointments })))
 }
 
 const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -58,7 +71,7 @@ const schedule = dailyAppointments.map((appointment) => {
 
   // console.log(appointment, 'hello')
   // console.log(interviewers, 'interviewers')
-  // console.log(interview, 'interview')
+  // console.log(interview, 'interview1')
 
   return (
     <Appointment
@@ -68,6 +81,7 @@ const schedule = dailyAppointments.map((appointment) => {
       interview={interview}
       interviewers={interviewers}
       bookInterview={bookInterview}
+      cancelInterview={cancelInterview}
     />
   );
 });
