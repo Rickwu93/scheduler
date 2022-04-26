@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+const { getAppointmentsForDay } = require('helpers/selectors');
 
 export default function useApplicationData() {
 	const [state, setState] = useState({
@@ -25,6 +26,26 @@ export default function useApplicationData() {
 			}));
 		});
 	}, []);
+  //to update the spots remaining counter
+  const remainingSpotsCounter = (state, appointments) => {
+    
+    const initialState = {...state, appointments}
+    const numOfAppointments = getAppointmentsForDay(initialState, state.day)
+
+    let spotsRemaining = 0;
+    for (const numOfAppointment of numOfAppointments) {
+      if (!numOfAppointment.interview) {
+        spotsRemaining ++;
+      }
+    }
+    for (const day of initialState.days) {
+      if (day.name === state.day) {
+        day['spots'] = spotsRemaining
+      }
+    }
+  };
+    
+
 
 	function bookInterview(id, interview) {
 		const appointment = {
@@ -36,6 +57,8 @@ export default function useApplicationData() {
 			...state.appointments,
 			[id]: appointment,
 		};
+
+    remainingSpotsCounter(state, appointments);
 		// setState(state => ({ ...state, appointments})); //only updating our state locally
 		return axios
 			.put(`api/appointments/${id}`, { interview })
@@ -53,6 +76,9 @@ export default function useApplicationData() {
 			...state.appointments,
 			[id]: appointment,
 		};
+
+    remainingSpotsCounter(state, appointments);
+
 		return axios
 			.delete(`api/appointments/${id}`)
 			.then(response => setState(state => ({ ...state, appointments })));
