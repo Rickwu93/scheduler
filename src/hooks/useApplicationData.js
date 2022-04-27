@@ -28,23 +28,23 @@ export default function useApplicationData() {
     .catch((e) => console.log(e, 'errror'))
 	}, []);
   //to update the spots remaining counter
-  const remainingSpotsCounter = (state, appointments) => {
-    
-    const initialState = {...state, appointments}
-    const numOfAppointments = getAppointmentsForDay(initialState, state.day)
+  const updateSpots = (state, appointments) => {
+    let spots = 0;
 
-    let spotsRemaining = 0;
-    for (const numOfAppointment of numOfAppointments) {
-      if (!numOfAppointment.interview) {
-        spotsRemaining ++;
-      }
-    }
-    for (const day of initialState.days) {
-      if (day.name === state.day) {
-        day['spots'] = spotsRemaining
-      }
-    }
-  };
+    const weekday = state.days.find(weekday =>
+      weekday.name === state.day);
+
+    weekday.appointments.forEach(id => {
+      const appointment = appointments[id];
+      if (!appointment.interview)
+        spots++
+    })
+
+    const day = { ...weekday, spots };
+    const days = state.days.map(weekday =>
+      weekday.name === state.day ? day : weekday)
+    return days;
+  } 
     
 
 
@@ -59,11 +59,13 @@ export default function useApplicationData() {
 			[id]: appointment,
 		};
 
-    remainingSpotsCounter(state, appointments);
+    
 		// setState(state => ({ ...state, appointments})); //only updating our state locally
 		return axios
 			.put(`api/appointments/${id}`, { interview })
-			.then(response => setState(state => ({ ...state, appointments })));
+			.then(response => {
+        const days = updateSpots(state, appointments)
+        setState(state => ({ ...state, days, appointments }))});
 	}
 
 	//similar to bookInterview
@@ -78,11 +80,12 @@ export default function useApplicationData() {
 			[id]: appointment,
 		};
 
-    remainingSpotsCounter(state, appointments);
 
 		return axios
 			.delete(`api/appointments/${id}`)
-			.then(response => setState(state => ({ ...state, appointments })));
+			.then(response => {
+        const days = updateSpots(state, appointments)
+        setState(state => ({ ...state, days, appointments }))});
 	}
 
 	return {
