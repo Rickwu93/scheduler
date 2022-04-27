@@ -24,7 +24,8 @@ export default function useApplicationData() {
 				appointments: all[1].data,
 				interviewers: all[2].data,
 			}));
-		});
+		})
+    .catch((e) => console.log(e, 'errror'))
 	}, []);
   //to update the spots remaining counter
   const remainingSpotsCounter = (state, appointments) => {
