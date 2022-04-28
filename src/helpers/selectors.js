@@ -1,3 +1,4 @@
+//returns array with the appointment object for the selected day
 export function getAppointmentsForDay(state, day) {
  
   const dayObject = state.days.find(element => element.name === day);
@@ -16,7 +17,7 @@ export function getAppointmentsForDay(state, day) {
   }
 return output;
 };
-
+//returns array with the interviewer object for the selected day
 export function getInterviewersForDay(state, day) {
  
   const dayObject = state.days.find(element => element.name === day);

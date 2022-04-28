@@ -25,7 +25,7 @@ export default function Appointment(props) {
 	const { mode, transition, back } = useVisualMode(
 		props.interview ? SHOW : EMPTY
 	);
-
+	//calls the function to book on interview when user clicks save. Props to <Form> component
 	function save(name, interviewer) {
 		const interview = {
 			student: name,
@@ -37,7 +37,7 @@ export default function Appointment(props) {
 			.then(() => transition(SHOW))
 			.catch(() => transition(ERROR_SAVE, true));
 	}
-	//deleteInterview changed name to destroy as noted in compass
+	//deleteInterview changed name to destroy as noted in compass. Deletes the interview
 	function destroy() {
 		transition(DELETE, true);
 
@@ -46,7 +46,7 @@ export default function Appointment(props) {
 			.then(() => transition(EMPTY))
 			.catch(() => transition(ERROR_DELETE, true));
 	}
-
+//visual mode component rendering
 	return (
 		<article className="appointment">
 			<Header time={props.time} />

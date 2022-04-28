@@ -12,13 +12,13 @@ export default function Form(props) {
 		setStudent('');
 		setInterviewer(null);
 	};
-	//resets the form when cancel is click, visual to previous page
+	//resets the form when cancel is clicked, visual to previous page
 	const cancel = () => {
 		reset();
 		props.onCancel();
 	};
 
-	//validate the form
+	//validate the user has inputed a name and selected an interviewer , called when user clicks save
 	function validate() {
 		if (student === '') {
 			setError('Student name cannot be blank');

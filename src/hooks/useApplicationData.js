@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-//keeper of all our functions
+//keeper of all our functions, //state
 export default function useApplicationData() {
 	const [state, setState] = useState({
 		day: 'Monday',
@@ -9,9 +9,9 @@ export default function useApplicationData() {
 		appointments: {},
 		interviewers: {},
 	});
-
+	//state updates the day
 	const setDay = day => setState({ ...state, day });
-
+	//api server data we bring in
 	useEffect(() => {
 		Promise.all([
 			axios.get('/api/days'),
@@ -26,7 +26,7 @@ export default function useApplicationData() {
 			}));
 		})
 	}, []);
-  //to update the spots remaining counter
+  //to update the spots remaining counter when a slot is added/deleted
   const updateSpots = (state, appointments) => {
     let spots = 0;
 
@@ -45,8 +45,7 @@ export default function useApplicationData() {
     return days;
   } 
     
-
-
+	//books interview to update database and the state counter
 	function bookInterview(id, interview) {
 		const appointment = {
 			...state.appointments[id],
@@ -67,7 +66,7 @@ export default function useApplicationData() {
         setState(state => ({ ...state, days, appointments }))});
 	}
 
-	//similar to bookInterview
+	//similar to bookInterview, cancels interview and updates the database and state counter
 	function cancelInterview(id) {
 		const appointment = {
 			...state.appointments[id],
@@ -86,7 +85,7 @@ export default function useApplicationData() {
         const days = updateSpots(state, appointments)
         setState(state => ({ ...state, days, appointments }))});
 	}
-
+	//functions used in application.js we can import out
 	return {
 		state,
 		setDay,
