@@ -2,7 +2,11 @@ import React from 'react';
 import 'components/Application.scss';
 import DayList from 'components/DayList';
 import Appointment from 'components/Appointment';
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from 'helpers/selectors';
+import {
+	getAppointmentsForDay,
+	getInterview,
+	getInterviewersForDay,
+} from 'helpers/selectors';
 import useApplicationData from 'hooks/useApplicationData';
 
 export default function Application() {
@@ -10,11 +14,10 @@ export default function Application() {
 		useApplicationData();
 
 	const dailyAppointments = getAppointmentsForDay(state, state.day);
-	
+
 	const schedule = dailyAppointments.map(appointment => {
 		const interviewers = getInterviewersForDay(state, state.day);
 		const interview = getInterview(state, appointment.interview);
-
 
 		return (
 			<Appointment
@@ -48,9 +51,9 @@ export default function Application() {
 				/>
 			</section>
 			<section className="schedule">
-        {schedule}
-        <Appointment key="last" time="5pm"/>
-        </section>
+				{schedule}
+				<Appointment key="last" time="5pm" />
+			</section>
 		</main>
 	);
 }

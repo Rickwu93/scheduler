@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
+//keeper of all our functions
 export default function useApplicationData() {
 	const [state, setState] = useState({
 		day: 'Monday',
@@ -25,7 +25,6 @@ export default function useApplicationData() {
 				interviewers: all[2].data,
 			}));
 		})
-    .catch((e) => console.log(e, 'errror'))
 	}, []);
   //to update the spots remaining counter
   const updateSpots = (state, appointments) => {

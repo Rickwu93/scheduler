@@ -6,7 +6,7 @@ export default function Form(props) {
 	const [student, setStudent] = useState(props.student || '');
 	const [interviewer, setInterviewer] = useState(props.interviewer || null);
 	const [error, setError] = useState('');
-	
+
 	//clears the name and interviewer selection when users cancel out of the form
 	const reset = () => {
 		setStudent('');

@@ -26,7 +26,7 @@ export function getInterviewersForDay(state, day) {
   }
 
   const interviewerId = dayObject.interviewers;
-  // console.log(interviewerId)
+  
   const stateInterviewers = interviewerId.map((id) => {
     return state.interviewers[id]
   })
