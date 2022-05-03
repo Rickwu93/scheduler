@@ -26,8 +26,8 @@ to allow users to easily create appointments, edit, and cancel their appointment
 
 ## Setup
 
-Install dependencies with `npm install`.
-Clone the Api server on: https://github.com/lighthouse-labs/scheduler-api and follow README
+- Install dependencies with `npm install`.
+- Clone the Api server on: https://github.com/lighthouse-labs/scheduler-api and follow README
 
 ## Running Webpack Development Server
 
@@ -49,9 +49,22 @@ npm run storybook
 
 ## Dependencies 
 
--   axios
--   classnames
--   normalize.css
--   react
--   react-dom
--   react-scripts
+- Axios
+- Classnames
+- Normalize.css
+- React
+- React-dom
+- React-scripts
+- Babel/core
+- Storybook/addon-actions
+- Storybook/addon-backgrounds
+- Storybook/addon-links
+- Storybook/addons
+- Storybook/react
+- Testing-library/jest-dom
+- Testing-library/react
+- Testing-library/react-hooks
+- Babel-loader
+- Node-sass
+- Prop-types
+- React-test-renderer
