@@ -14,7 +14,7 @@ export default function Application() {
 		useApplicationData();
 //gets the appointment for the day
 	const dailyAppointments = getAppointmentsForDay(state, state.day);
-
+//mapping through the array in the <Appointment> component to return the appointment slot for the interview
 	const schedule = dailyAppointments.map(appointment => {
 		const interviewers = getInterviewersForDay(state, state.day);
 		const interview = getInterview(state, appointment.interview);
