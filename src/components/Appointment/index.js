@@ -21,11 +21,11 @@ const ERROR_DELETE = 'ERROR_DELETE';
 
 export default function Appointment(props) {
 	//if props.interview has a value, pass useVisualMode the SHOW mode, else pass EMPTY
-
+	//custom hook used to show <Appointment> components
 	const { mode, transition, back } = useVisualMode(
 		props.interview ? SHOW : EMPTY
 	);
-	//calls the function to book on interview when user clicks save. Props to <Form> component
+	//calls the function to book on interview when user clicks save. Props pass to <Form> component
 	function save(name, interviewer) {
 		const interview = {
 			student: name,
@@ -37,7 +37,7 @@ export default function Appointment(props) {
 			.then(() => transition(SHOW))
 			.catch(() => transition(ERROR_SAVE, true));
 	}
-	//deleteInterview changed name to destroy as noted in compass. Deletes the interview
+	//Passed as props to <Confirm> component and cancels the interview, returns visual of deleted interview
 	function destroy() {
 		transition(DELETE, true);
 

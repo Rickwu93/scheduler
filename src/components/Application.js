@@ -8,11 +8,11 @@ import {
 	getInterviewersForDay,
 } from 'helpers/selectors';
 import useApplicationData from 'hooks/useApplicationData';
-
+//functions to import in from useApplicationData from our custom hook
 export default function Application() {
 	const { state, setDay, bookInterview, cancelInterview } =
 		useApplicationData();
-
+//gets the appointment for the day
 	const dailyAppointments = getAppointmentsForDay(state, state.day);
 
 	const schedule = dailyAppointments.map(appointment => {
