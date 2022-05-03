@@ -1,33 +1,35 @@
 import { useState } from 'react';
 
 export default function useVisualMode(initial) {
-	const [mode, setMode] = useState(initial);
+	// const [mode, setMode] = useState(initial);
 	const [history, setHistory] = useState([initial]);
 
 	function transition(mode, replace = false) {
-		const newHistory = [...history];
+		// const newHistory = [...history];
 		//if transition (THIRD, true) is true: Transition to THIRD by REPLACING SECOND
 		//if true, set history to reflect that we are replacing the current mode
 
-		if (replace) {
-			newHistory.pop();
+		if (!replace) {
+			setHistory(prev => {
+				return [...prev, mode];
+			});
 		}
-
-		setMode(mode);
-		newHistory.push(mode);
-		setHistory(newHistory);
+		setHistory(prev => {
+			return [...prev.slice(0, -1), mode];
+		});
 	}
 
 	//should not allow user to go back to initial mode if length of history is greater than 1
 	//going back won't change the mode view
+	//In error mode, when closing error message it should transition back to Form view instead of show
 	const back = () => {
-		setHistory(history => {
-			const newHistory =
-				history.length > 1 ? [...history].slice(0, -1) : [...history];
-			setMode(newHistory[newHistory.length - 1]);
-			return newHistory;
-		});
+		if (history.length > 1) {
+			setHistory(prev => {
+				return [...prev.slice(0, -1)];
+			});
+		}
 	};
-  //functions used in appointment/index.js
-	return { mode, transition, back };
+
+	//mode is always last item of the history array
+	return { mode: history[history.length - 1], transition, back };
 }
